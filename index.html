@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HiTalk Education - Christian Homeschool Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            position: relative;
+        }
+
+        .logo-circle {
+            width: 32px;
+            height: 32px;
+            background: #9db4c0;
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-lines {
+            position: absolute;
+            right: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 24px;
+        }
+
+        .line {
+            background: #4ecdc4;
+            margin: 1px 0;
+            border-radius: 1px;
+        }
+
+        .line:nth-child(1) { width: 18px; height: 2px; }
+        .line:nth-child(2) { width: 16px; height: 2px; }
+        .line:nth-child(3) { width: 14px; height: 2px; }
+        .line:nth-child(4) { width: 12px; height: 2px; }
+        .line:nth-child(5) { width: 10px; height: 2px; }
+        .line:nth-child(6) { width: 8px; height: 2px; }
+
+        .logo-text {
+            font-size: 18px;
+            font-weight: 300;
+            color: #9db4c0;
+            letter-spacing: 1px;
+        }
+
+        .menu-toggle {
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .menu-lines {
+            width: 20px;
+            height: 2px;
+            background: #333;
+            margin: 4px 0;
+            transition: 0.3s;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 2rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            display: none;
+            min-width: 150px;
+        }
+
+        .dropdown-menu.active {
+            display: block;
+        }
+
+        .dropdown-item {
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: background 0.2s;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background: #f8f9fa;
+        }
+
+        /* Main Container */
+        .container {
+            padding-top: 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        /* Login Page */
+        .login-page {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 80px);
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 60px 40px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .login-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+        }
+
+        .login-logo .logo-circle {
+            width: 64px;
+            height: 64px;
+        }
+
+        .login-logo .logo-lines {
+            right: -10px;
+            width: 40px;
+            height: 48px;
+        }
+
+        .login-logo .line:nth-child(1) { width: 36px; height: 3px; }
+        .login-logo .line:nth-child(2) { width: 32px; height: 3px; }
+        .login-logo .line:nth-child(3) { width: 28px; height: 3px; }
+        .login-logo .line:nth-child(4) { width: 24px; height: 3px; }
+        .login-logo .line:nth-child(5) { width: 20px; height: 3px; }
+        .login-logo .line:nth-child(6) { width: 16px; height: 3px; }
+
+        .login-title {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .login-subtitle {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 40px;
+        }
+
+        .google-signin {
+            background: white;
+            border: 2px solid #ddd;
+            padding: 12px 24px;
+            border-radius: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            transition: all 0.3s;
+            font-size: 16px;
+            margin: 0 auto;
+            max-width: 250px;
+        }
+
+        .google-signin:hover {
+            border-color: #4285f4;
+            box-shadow: 0 5px 15px rgba(66, 133, 244, 0.2);
+        }
+
+        /* Dashboard */
+        .dashboard {
+            display: none;
+            padding: 40px 0;
+        }
+
+        .dashboard.active {
+            display: block;
+        }
+
+        .welcome-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-sections {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .section-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 2px solid transparent;
+        }
+
+        .section-card:hover {
+            transform: translateY(-5px);
+            border-color: #4ecdc4;
+            box-shadow: 0 20px 50px rgba(78, 205, 196, 0.2);
+        }
+
+        .section-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #4ecdc4, #44a08d);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 36px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .section-description {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Section Views */
+        .section-view {
+            display: none;
+            padding: 40px 0;
+        }
+
+        .section-view.active {
+            display: block;
+        }
+
+        .section-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: transform 0.2s;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+        }
+
+        /* High School Section */
+        .curriculum-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .curriculum-item {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .curriculum-item:hover {
+            transform: translateY(-3px);
+        }
+
+        .progress-bar {
+            background: #e0e0e0;
+            border-radius: 10px;
+            height: 8px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #4ecdc4, #44a08d);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        /* AI Calendar */
+        .calendar-view {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .calendar-day {
+            background: white;
+            padding: 15px 10px;
+            min-height: 100px;
+            position: relative;
+        }
+
+        .calendar-day.today {
+            background: #e3f2fd;
+        }
+
+        .calendar-event {
+            background: linear-gradient(135deg, #4ecdc4, #44a08d);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin: 2px 0;
+        }
+
+        /* AI Tutor */
+        .chat-container {
+            background: white;
+            border-radius: 20px;
+            height: 600px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .chat-header {
+            padding: 20px;
+            border-bottom: 1px solid #e0e0e0;
+            background: linear-gradient(135deg, #4ecdc4, #44a08d);
+            color: white;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message-bubble {
+            max-width: 70%;
+            padding: 12px 18px;
+            border-radius: 20px;
+            background: #f0f0f0;
+        }
+
+        .message.user .message-bubble {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .chat-input {
+            padding: 20px;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 12px 18px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            outline: none;
+        }
+
+        .send-button {
+            background: linear-gradient(135deg, #4ecdc4, #44a08d);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+        }
+
+        /* Profile Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .close-button {
+            float: right;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .main-sections {
+                grid-template-columns: 1fr;
+            }
+            
+            .header {
+                padding: 1rem;
+            }
+            
+            .container {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="logo-container">
+            <div class="logo">
+                <div class="logo-circle">
+                    <div class="logo-lines">
+                        <div class="line"></div>
+                        <div class="line"></div>
+                        <div class="line"></div>
+                        <div class="line"></div>
+                        <div class="line"></div>
+                        <div class="line"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="logo-text">HiTalk Education</div>
+        </div>
+        
+        <div class="menu-toggle" onclick="toggleMenu()" id="menuToggle">
+            <div class="menu-lines"></div>
+            <div class="menu-lines"></div>
+            <div class="menu-lines"></div>
+        </div>
+        
+        <div class="dropdown-menu" id="dropdownMenu">
+            <div class="dropdown-item" onclick="showProfile()">Profile</div>
+            <div class="dropdown-item" onclick="showDashboard()">Dashboard</div>
+            <div class="dropdown-item" onclick="showProgressTracking()">Progress Tracking</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Login Page -->
+        <div id="loginPage" class="login-page">
+            <div class="login-card">
+                <div class="login-logo logo">
+                    <div class="logo-circle">
+                        <div class="logo-lines">
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                        </div>
+                    </div>
+                </div>
+                <h1 class="login-title">HiTalk Education</h1>
+                <p class="login-subtitle">Christian Homeschool High School Platform</p>
+                <button class="google-signin" onclick="signInWithGoogle()">
+                    <svg width="20" height="20" viewBox="0 0 24 24">
+                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                    </svg>
+                    Sign in with Google
+                </button>
+            </div>
+        </div>
+
+        <!-- Dashboard -->
+        <div id="dashboard" class="dashboard">
+            <div class="welcome-section">
+                <h1>Welcome to HiTalk Education</h1>
+                <p style="font-size: 18px; color: #666; margin-top: 10px;">
+                    "To organize Christian homeschool education and make it intelligently accessible and fruitful."
+                </p>
+            </div>
+
+            <div class="main-sections">
+                <div class="section-card" onclick="showSection('highschool')">
+                    <div class="section-icon">🎓</div>
+                    <h2 class="section-title">High School</h2>
+                    <p class="section-description">
+                        Manage any curriculum with smart organization tools. Import from Apologia, Abeka, BJU Press, and more.
+                    </p>
+                </div>
+
+                <div class="section-card" onclick="showSection('calendar')">
+                    <div class="section-icon">📅</div>
+                    <h2 class="section-title">AI Calendar</h2>
+                    <p class="section-description">
+                        Intelligent scheduling that adapts to your family's pace and creates optimal study plans automatically.
+                    </p>
+                </div>
+
+                <div class="section-card" onclick="showSection('tutor')">
+                    <div class="section-icon">🤖</div>
+                    <h2 class="section-title">AI Tutor</h2>
+                    <p class="section-description">
+                        Get instant help with any subject while maintaining biblical worldview and Christian perspectives.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- High School Section -->
+        <div id="highschoolSection" class="section-view">
+            <button class="back-button" onclick="showDashboard()">← Back to Dashboard</button>
+            <div class="section-header">
+                <h1>High School Curriculum Management</h1>
+                <p>Organize any curriculum and track progress across all subjects</p>
+            </div>
+
+            <div class="curriculum-grid">
+                <div class="curriculum-item">
+                    <h3>Algebra II</h3>
+                    <p><strong>Saxon Math</strong></p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 75%;"></div>
+                    </div>
+                    <p>Lesson 87 of 116 • 75% Complete</p>
+                    <p style="color: #666; font-size: 14px; margin-top: 10px;">Next: Quadratic Applications</p>
+                </div>
+
+                <div class="curriculum-item">
+                    <h3>Biology</h3>
+                    <p><strong>Apologia</strong></p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 60%;"></div>
+                    </div>
+                    <p>Module 9 of 15 • 60% Complete</p>
+                    <p style="color: #666; font-size: 14px; margin-top: 10px;">Next: Cellular Respiration</p>
+                </div>
+
+                <div class="curriculum-item">
+                    <h3>World History</h3>
+                    <p><strong>Sonlight</strong></p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 45%;"></div>
+                    </div>
+                    <p>Week 18 of 36 • 45% Complete</p>
+                    <p style="color: #666; font-size: 14px; margin-top: 10px;">Current: Renaissance Period</p>
+                </div>
+
+                <div class="curriculum-item">
+                    <h3>Literature</h3>
+                    <p><strong>Excellence in Writing</strong></p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 80%;"></div>
+                    </div>
+                    <p>Unit 8 of 10 • 80% Complete</p>
+                    <p style="color: #666; font-size: 14px; margin-top: 10px;">Current: Shakespeare Analysis</p>
+                </div>
+
+                <div class="curriculum-item">
+                    <h3>Chemistry</h3>
+                    <p><strong>Apologia</strong></p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 30%;"></div>
+                    </div>
+                    <p>Module 4 of 14 • 30% Complete</p>
+                    <p style="color: #666; font-size: 14px; margin-top: 10px;">Next: Molecular Geometry</p>
+                </div>
+
+                <div class="curriculum-item">
+                    <h3>Economics</h3>
+                    <p><strong>Whatever Happened to Penny Candy?</strong></p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 90%;"></div>
+                    </div>
+                    <p>Chapter 17 of 19 • 90% Complete</p>
+                    <p style="color: #666; font-size: 14px; margin-top: 10px;">Almost finished!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Calendar Section -->
+        <div id="calendarSection" class="section-view">
+            <button class="back-button" onclick="showDashboard()">← Back to Dashboard</button>
+            <div class="section-header">
+                <h1>AI-Powered Study Calendar</h1>
+                <p>Intelligent scheduling optimized for your learning pace and family schedule</p>
+            </div>
+
+            <div class="calendar-view">
+                <div class="calendar-header">
+                    <h2>March 2025</h2>
+                    <button style="background: #4ecdc4; color: white; border: none; padding: 8px 16px; border-radius: 20px; cursor: pointer;">
+                        Optimize Schedule
+                    </button>
+                </div>
+                
+                <div class="calendar-grid">
+                    <div class="calendar-day" style="background: #f5f5f5; color: #999;">
+                        <div style="font-weight: bold;">Sun</div>
+                    </div>
+                    <div class="calendar-day" style="background: #f5f5f5; color: #999;">
+                        <div style="font-weight: bold;">Mon</div>
+                    </div>
+                    <div class="calendar-day" style="background: #f5f5f5; color: #999;">
+                        <div style="font-weight: bold;">Tue</div>
+                    </div>
+                    <div class="calendar-day" style="background: #f5f5f5; color: #999;">
+                        <div style="font-weight: bold;">Wed</div>
+                    </div>
+                    <div class="calendar-day" style="background: #f5f5f5; color: #999;">
+                        <div style="font-weight: bold;">Thu</div>
+                    </div>
+                    <div class="calendar-day" style="background: #f5f5f5; color: #999;">
+                        <div style="font-weight: bold;">Fri</div>
+                    </div>
+                    <div class="calendar-day" style="background: #f5f5f5; color: #999;">
+                        <div style="font-weight: bold;">Sat</div>
+                    </div>
+                    
+                    <!-- Week 1 -->
+                    <div class="calendar-day">1</div>
+                    <div class="calendar-day">
+                        2
+                        <div class="calendar-event">Algebra II</div>
+                        <div class="calendar-event">Biology Lab</div>
+                    </div>
+                    <div class="calendar-day">
+                        3
+                        <div class="calendar-event">History</div>
+                        <div class="calendar-event">Literature</div>
+                    </div>
+                    <div class="calendar-day">
+                        4
+                        <div class="calendar-event">Math Review</div>
+                        <div class="calendar-event">Chemistry</div>
+                    </div>
+                    <div class="calendar-day">
+                        5
+                        <div class="calendar-event">Writing</div>
+                        <div class="calendar-event">Economics</div>
+                    </div>
+                    <div class="calendar-day">6</div>
+                    <div class="calendar-day">7</div>
+                    
+                    <!-- Week 2 -->
+                    <div class="calendar-day">8</div>
+                    <div class="calendar-day">
+                        9
+                        <div class="calendar-event">Algebra II</div>
+                        <div class="calendar-event">Biology</div>
+                    </div>
+                    <div class="calendar-day today">
+                        10
+                        <div class="calendar-event">History Test</div>
+                        <div class="calendar-event">Literature Essay Due</div>
+                    </div>
+                    <div class="calendar-day">
+                        11
+                        <div class="calendar-event">Math Quiz</div>
+                        <div class="calendar-event">Chemistry Lab</div>
+                    </div>
+                    <div class="calendar-day">
+                        12
+                        <div class="calendar-event">Writing Workshop</div>
+                    </div>
+                    <div class="calendar-day">13</div>
+                    <div class="calendar-day">14</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Tutor Section -->
+        <div id="tutorSection" class="section-view">
+            <button class="back-button" onclick="showDashboard()">← Back to Dashboard</button>
+            <div class="section-header">
+                <h1>AI Tutor</h1>
+                <p>Get instant help with any subject while maintaining biblical worldview</p>
+            </div>
+
+            <div class="chat-container">
+                <div class="chat-header">
+                    <h3>Chat with your AI Tutor</h3>
+                    <p style="opacity: 0.9; margin-top: 5px;">Ask questions about any of your subjects</p>
+                </div>
+                
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message">
+                        <div class="message-bubble">
+                            Hello! I'm here to help you with your studies. I can assist with any high school subject while maintaining a Christian worldview. What would you like to learn about today?
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chat-input">
+                    <input type="text" id="chatInput" placeholder="Ask a question about any subject..." onkeypress="handleKeyPress(event)">
+                    <button class="send-button" onclick="sendMessage()">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Modal -->
+    <div class="modal-overlay" id="profileModal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeProfile()">&times;</span>
+            <h2>Student Profile</h2>
+            <div style="text-align: center; margin: 20px 0;">
+                <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #4ecdc4, #44a08d); border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; font-size: 36px; color: white;">
+                    👨‍🎓
+                </div>
+                <h3>John Student</h3>
+                <p style="color: #666;">Grade 11 • Joined September 2024</p>
+            </div>
+            
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 20px 0;">
+                <h4>Academic Overview</h4>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px;">
+                    <div>
+                        <strong>Current GPA:</strong><br>
+                        <span style="color: #4ecdc4; font-size: 18px;">3.7</span>
+                    </div>
+                    <div>
+                        <strong>Credits Earned:</strong><br>
+                        <span style="color: #4ecdc4; font-size: 18px;">18.5 / 24</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="margin: 20px 0;">
+                <h4>Preferred Study Time</h4>
+                <select style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; margin-top: 10px;">
+                    <option>Morning (8:00 AM - 12:00 PM)</option>
+                    <option selected>Afternoon (1:00 PM - 5:00 PM)</option>
+                    <option>Evening (6:00 PM - 9:00 PM)</option>
+                </select>
+            </div>
+            
+            <div style="margin: 20px 0;">
+                <h4>Learning Preferences</h4>
+                <div style="margin-top: 10px;">
+                    <label style="display: block; margin: 8px 0;">
+                        <input type="checkbox" checked> Visual Learning Materials
+                    </label>
+                    <label style="display: block; margin: 8px 0;">
+                        <input type="checkbox" checked> Interactive Assignments
+                    </label>
+                    <label style="display: block; margin: 8px 0;">
+                        <input type="checkbox"> Audio Lessons
+                    </label>
+                    <label style="display: block; margin: 8px 0;">
+                        <input type="checkbox" checked> Hands-on Projects
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Progress Tracking Modal -->
+    <div class="modal-overlay" id="progressModal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeProgress()">&times;</span>
+            <h2>Progress Tracking</h2>
+            
+            <div style="margin: 30px 0;">
+                <h3>Overall Academic Progress</h3>
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 15px 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span>Total Completion</span>
+                        <span style="font-weight: bold; color: #4ecdc4;">68%</span>
+                    </div>
+                    <div class="progress-bar" style="margin: 10px 0;">
+                        <div class="progress-fill" style="width: 68%;"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="margin: 30px 0;">
+                <h3>Subject Performance</h3>
+                <div style="display: grid; gap: 15px; margin-top: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                        <div>
+                            <strong>Mathematics</strong>
+                            <br><small style="color: #666;">Saxon Algebra II</small>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="color: #4ecdc4; font-weight: bold;">A-</div>
+                            <small style="color: #666;">75% Complete</small>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                        <div>
+                            <strong>Science</strong>
+                            <br><small style="color: #666;">Apologia Biology</small>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="color: #4ecdc4; font-weight: bold;">B+</div>
+                            <small style="color: #666;">60% Complete</small>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                        <div>
+                            <strong>Literature</strong>
+                            <br><small style="color: #666;">Excellence in Writing</small>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="color: #4ecdc4; font-weight: bold;">A</div>
+                            <small style="color: #666;">80% Complete</small>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                        <div>
+                            <strong>History</strong>
+                            <br><small style="color: #666;">Sonlight World History</small>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="color: #4ecdc4; font-weight: bold;">B</div>
+                            <small style="color: #666;">45% Complete</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="margin: 30px 0;">
+                <h3>Weekly Study Goals</h3>
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 10px;">
+                    <div style="display: flex; justify-content: space-between; margin: 10px 0;">
+                        <span>Complete 4 Math Lessons</span>
+                        <span style="color: #4ecdc4;">✓</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin: 10px 0;">
+                        <span>Finish Biology Lab Report</span>
+                        <span style="color: #ffa726;">In Progress</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin: 10px 0;">
+                        <span>Write Literature Essay</span>
+                        <span style="color: #4ecdc4;">✓</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin: 10px 0;">
+                        <span>Review History Chapters 8-9</span>
+                        <span style="color: #ff7043;">Pending</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentUser = null;
+        
+        function signInWithGoogle() {
+            // Simulate Google sign-in
+            currentUser = {
+                name: "John Student",
+                email: "john.student@email.com",
+                profilePic: "👨‍🎓"
+            };
+            
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('dashboard').classList.add('active');
+            document.getElementById('menuToggle').style.display = 'block';
+        }
+        
+        function toggleMenu() {
+            const menu = document.getElementById('dropdownMenu');
+            menu.classList.toggle('active');
+        }
+        
+        function showProfile() {
+            document.getElementById('dropdownMenu').classList.remove('active');
+            document.getElementById('profileModal').classList.add('active');
+        }
+        
+        function closeProfile() {
+            document.getElementById('profileModal').classList.remove('active');
+        }
+        
+        function showProgressTracking() {
+            document.getElementById('dropdownMenu').classList.remove('active');
+            document.getElementById('progressModal').classList.add('active');
+        }
+        
+        function closeProgress() {
+            document.getElementById('progressModal').classList.remove('active');
+        }
+        
+        function showDashboard() {
+            // Hide all sections
+            document.querySelectorAll('.section-view').forEach(view => {
+                view.classList.remove('active');
+            });
+            
+            // Show dashboard
+            document.getElementById('dashboard').classList.add('active');
+            document.getElementById('dropdownMenu').classList.remove('active');
+        }
+        
+        function showSection(sectionName) {
+            // Hide dashboard and other sections
+            document.getElementById('dashboard').classList.remove('active');
+            document.querySelectorAll('.section-view').forEach(view => {
+                view.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionName + 'Section').classList.add('active');
+        }
+        
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const messages = document.getElementById('chatMessages');
+            
+            if (input.value.trim() === '') return;
+            
+            // Add user message
+            const userMessage = document.createElement('div');
+            userMessage.className = 'message user';
+            userMessage.innerHTML = `
+                <div class="message-bubble">
+                    ${input.value}
+                </div>
+            `;
+            messages.appendChild(userMessage);
+            
+            const userQuestion = input.value.toLowerCase();
+            input.value = '';
+            
+            // Simulate AI response
+            setTimeout(() => {
+                const aiMessage = document.createElement('div');
+                aiMessage.className = 'message';
+                
+                let response = getAIResponse(userQuestion);
+                
+                aiMessage.innerHTML = `
+                    <div class="message-bubble">
+                        ${response}
+                    </div>
+                `;
+                messages.appendChild(aiMessage);
+                messages.scrollTop = messages.scrollHeight;
+            }, 1000);
+            
+            messages.scrollTop = messages.scrollHeight;
+        }
+        
+        function getAIResponse(question) {
+            if (question.includes('photosynthesis')) {
+                return "Photosynthesis is one of God's most amazing designs! It's the process where plants use sunlight, water, and CO₂ to make glucose and oxygen. The equation is: 6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂. This shows how God designed plants to not only feed themselves but also produce the oxygen we need to breathe. Would you like me to explain the light and dark reactions?";
+            } else if (question.includes('algebra') || question.includes('math')) {
+                return "I'd be happy to help with algebra! Math reflects God's order and consistency in creation - the same mathematical principles work everywhere in the universe. What specific algebra concept are you working on? Quadratic equations, factoring, graphing?";
+            } else if (question.includes('history')) {
+                return "History shows us God's sovereignty over nations and His faithfulness through time. What historical period or event would you like to explore? I can help you understand the biblical worldview perspective on historical events.";
+            } else if (question.includes('biology')) {
+                return "Biology reveals the incredible complexity and design in God's creation! From the smallest cell to complex ecosystems, everything shows purposeful design. What aspect of biology are you studying? Cells, genetics, ecology, or human anatomy?";
+            } else if (question.includes('chemistry')) {
+                return "Chemistry shows us the fundamental building blocks that God used to create everything! The periodic table demonstrates order and patterns that reflect His design. What chemistry topic can I help you with? Atomic structure, chemical bonding, or reactions?";
+            } else {
+                return "That's a great question! I'm here to help you understand any subject from a Christian perspective. Could you be more specific about what you'd like to learn? I can help with math, science, history, literature, and more!";
+            }
+        }
+        
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+        
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('dropdownMenu');
+            const toggle = document.getElementById('menuToggle');
+            
+            if (!menu.contains(event.target) && !toggle.contains(event.target)) {
+                menu.classList.remove('active');
+            }
+        });
+        
+        // Close modals when clicking outside
+        document.addEventListener('click', function(event) {
+            const profileModal = document.getElementById('profileModal');
+            const progressModal = document.getElementById('progressModal');
+            
+            if (event.target === profileModal) {
+                profileModal.classList.remove('active');
+            }
+            if (event.target === progressModal) {
+                progressModal.classList.remove('active');
+            }
+        });
+        
+        // Initialize - hide menu toggle on login page
+        document.getElementById('menuToggle').style.display = 'none';
+    </script>
+</body>
+</html>
